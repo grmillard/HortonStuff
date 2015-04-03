@@ -3,21 +3,24 @@
 FROM registry.access.redhat.com/rhel6.5:latest
 
 
-subscription-manager repos --enable=rhel-6-server-extras-rpms
-subscription-manager repos --enable=rhel-6-server-optional-rpms
-subscription-manager repos --list | grep java
-subscription-manager repos --enable=rhel-6-server-aus-thirdparty-oracle-java-rpms
-yum install java-1.7.0-oracle-devel.x86_64
+RUN subscription-manager register --username=gmillard1@redhat.com --passwd=XXXXX 
 
-yum install vim
+RUN subscription-manager attach --pool=8a85f98144844aff014488d058bf15be
 
-yum install wget - needed for
+RUN subscription-manager repos --enable=rhel-6-server-extras-rpms
+RUN subscription-manager repos --enable=rhel-6-server-optional-rpms
+RUN subscription-manager repos --enable=rhel-6-server-aus-thirdparty-oracle-java-rpms
+RUN yum install java-1.7.0-oracle-devel.x86_64
 
-wget -nv http://public-repo-1.hortonworks.com/HDP/centos6/2.x/GA/2.2.0.0/hdp.repo -O /etc/yum.repos.d/hdp.repo
+RUN yum install vim
 
-yum install ntp
-service ntpd start
-chkconfig --level 2345 ntpd on
+RUN yum install wget
+
+RUN wget -nv http://public-repo-1.hortonworks.com/HDP/centos6/2.x/GA/2.2.0.0/hdp.repo -O /etc/yum.repos.d/hdp.repo
+
+RUN yum install ntp
+RUN service ntpd start
+RUN chkconfig --level 2345 ntpd on
 
 Replace first line in /etc/hosts file with
 <IP_ADDR>	hortontainer
