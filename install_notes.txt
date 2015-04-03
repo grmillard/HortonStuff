@@ -1,0 +1,44 @@
+FROM registry.access.redhat.com/rhel6.5:latest
+
+docker pull registry.access.redhat.com/rhel6.5:latest
+
+
+subscription-manager repos --enable=rhel-6-server-extras-rpms
+   54  subscription-manager repos --enable=rhel-6-server-optional-rpms
+   55  yum search java
+   56  yum search oracle
+   57  subscription-manager repos --list | grep java
+   58  subscription-manager repos --enable=rhel-6-server-aus-thirdparty-oracle-java-rpms
+   59  yum search oracle
+   60  yum install java-1.7.0-oracle-devel.x86_64
+
+install vim
+yum install vim
+
+yum install wget - needed for
+
+wget -nv http://public-repo-1.hortonworks.com/HDP/centos6/2.x/GA/2.2.0.0/hdp.repo -O /etc/yum.repos.d/hdp.repo
+
+NTP needs to be there
+yum install ntp
+service ntpd start
+chkconfig --level 2345 ntpd on
+
+Replace first line in /etc/hosts file with
+<IP_ADDR>	hortontainer
+
+run container in priv mode - <docker --iptables=true run -it --privileged=true rhel65_hortonworks2apr1001 bash> 
+
+
+iptables rules
+
+DNS
+iptables -A INPUT -p tcp -m state --state NEW --dport 53 -j ACCEPT
+iptables -A INPUT -p udp -m state --state NEW --dport 53 -j ACCEPT
+NTP
+iptables -A OUTPUT -p udp --dport 123 -j ACCEPT
+iptables -A INPUT -p udp --sport 123 -j ACCEPT
+
+
+
+
