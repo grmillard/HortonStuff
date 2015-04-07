@@ -2,7 +2,7 @@
 
 FROM registry.access.redhat.com/rhel6.5:latest
 
-RUN subscription-manager register --force --username=gmillard1@redhat.com --password=3Airplanesz!
+RUN subscription-manager register --force --username=gmillard1@redhat.com --password=xxxxxxxx!
 RUN subscription-manager attach --pool=8a85f9874011071c01407da00b3f7c5e
 RUN subscription-manager repos --enable=rhel-6-server-extras-rpms
 RUN subscription-manager repos --enable=rhel-6-server-optional-rpms
