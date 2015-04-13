@@ -2,7 +2,7 @@
 
 FROM registry.access.redhat.com/rhel6.5:latest
 
-RUN subscription-manager register --force --username=gmillard1@redhat.com --password=xxxxxxxx!
+RUN subscription-manager register --force --username=gmillard1@redhat.com --password=3Airplanesz!
 RUN subscription-manager attach --pool=8a85f9874011071c01407da00b3f7c5e
 RUN subscription-manager repos --enable=rhel-6-server-extras-rpms
 RUN subscription-manager repos --enable=rhel-6-server-optional-rpms
@@ -26,8 +26,9 @@ ADD HortonIPTables.txt /home/
 
 ADD directories.sh /home/
 
-CMD touch /home/.bashrc
-CMD cat /home/directories.sh >> /home/.bashrc
+CMD /bin/touch /home/.bashrc
+
+CMD /bin/cat /home/directories.sh >> /home/.bashrc 
 
 #Replace first line in /etc/hosts file with
 #<IP_ADDR>	hortontainer
@@ -50,3 +51,9 @@ RUN useradd -g hadoop zookeeper
 RUN useradd -g hadoop oozie
 RUN useradd -g hadoop knox
 RUN useradd -g nagios nagios
+
+
+RUN /home/directories.sh
+
+EXPOSE 53
+EXPOSE 123
